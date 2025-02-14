@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1036</width>
+    <height>569</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QWidget {
+    background-color: #F8F9FA;
+}
+
+QLineEdit, QDateEdit, QComboBox {
+    background-color: #FFFFFF;
+    border: 1px solid #D0D0D0;
+    color: #37474F;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+QLineEdit:focus, QDateEdit:focus, QComboBox:focus {
+    border: 1px solid #81D4FA;
+    outline: none;
+}
+QLabel {
+    color: #607D8B;
+    font-weight: bold;
+}
+QMessageBox {
+    background-color: #FFFFFF;
+    color: #37474F;
+}
+
+</string>
+   </property>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>981</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="master_layout">
+     <item>
+      <layout class="QHBoxLayout" name="row_1">
+       <item>
+        <widget class="QLineEdit" name="searchEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="searchButton">
+         <property name="styleSheet">
+          <string notr="true">QPushButton#searchButton {
+    background-color: #81D4FA;
+    color: #37474F;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+QPushButton#searchButton:hover {
+    background-color: #4FC3F7;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>Search</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="row_2">
+       <item>
+        <widget class="QCheckBox" name="filterCheckBox">
+         <property name="styleSheet">
+          <string notr="true">QCheckBox {
+    color: #607D8B;
+    spacing: 5px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    background-color: #F3F4F6;
+    border: 1px solid #D0D0D0;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #81D4FA;
+    image: url(:/checkmark.svg);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid #81D4FA;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>Filter</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="filterDropdown">
+         <item>
+          <property name="text">
+           <string>Year</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Brand</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Country</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="filterElementDropdown"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="row_3">
+       <item>
+        <widget class="QTableWidget" name="table">
+         <property name="styleSheet">
+          <string notr="true">QTableWidget {
+    background-color: #FFFFFF;
+    alternate-background-color: #F3F4F6;
+    gridline-color: #E0E0E0;
+    color: #37474F;
+    border: 1px solid #E0E0E0;
+    selection-background-color: #CCE7FF;
+}
+
+QTableWidget::item {
+    padding: 10px;
+    border: none;
+}
+
+QTableWidget::item:selected {
+    background-color: #CCE7FF;
+    color: #37474F;
+}
+
+QTableWidget::item:hover {
+    background-color: #E8EAF6;
+    color: #37474F;
+}
+
+QHeaderView::section {
+    background-color: #81D4FA;
+    color: #FFFFFF;
+    padding: 5px;
+    border: none;
+    font-weight: bold;
+    border-bottom: 2px solid #4FC3F7;
+}
+
+QTableCornerButton::section {
+    background-color: #81D4FA;
+    border: none;
+}
+</string>
+         </property>
+         <attribute name="horizontalHeaderCascadingSectionResizes">
+          <bool>true</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Size</string>
+          </property>
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Brand</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Country</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Date</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Stock</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="col_1">
+         <item>
+          <layout class="QHBoxLayout" name="col_row_1">
+           <item>
+            <widget class="QLabel" name="sizeLabel">
+             <property name="text">
+              <string>Size</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="sizeEdit"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="col_row_2">
+           <item>
+            <widget class="QLabel" name="brandLabel">
+             <property name="text">
+              <string>Brand</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="brandDropdown"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="col_row_3">
+           <item>
+            <widget class="QLabel" name="countryLabel">
+             <property name="text">
+              <string>Country</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="countryDropdown"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="col_row_4">
+           <item>
+            <widget class="QLabel" name="dateLabel">
+             <property name="text">
+              <string>Date</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDateEdit" name="dateEdit">
+             <property name="styleSheet">
+              <string notr="true">        self.col_row_4 = QtWidgets.QHBoxLayout()
+        self.col_row_4.setObjectName(&quot;col_row_4&quot;)
+        self.dateLabel = QtWidgets.QLabel(self.verticalLayoutWidget_2)
+        self.dateLabel.setObjectName(&quot;dateLabel&quot;)
+        self.col_row_4.addWidget(self.dateLabel)
+        self.dateEdit = QtWidgets.QDateEdit(self.verticalLayoutWidget_2)
+        self.dateEdit.setCalendarPopup(True)
+        self.dateEdit.setTimeSpec(QtCore.Qt.LocalTime)
+        self.dateEdit.setObjectName(&quot;dateEdit&quot;)
+        self.col_row_4.addWidget(self.dateEdit)
+        self.col_1.addLayout(self.col_row_4)</string>
+             </property>
+             <property name="displayFormat">
+              <string>dd/MM/yyyy</string>
+             </property>
+             <property name="calendarPopup">
+              <bool>true</bool>
+             </property>
+             <property name="timeSpec">
+              <enum>Qt::LocalTime</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="col_row_5">
+           <item>
+            <widget class="QLabel" name="stockLabel">
+             <property name="text">
+              <string>Stock</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="stockEdit"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="addButton">
+           <property name="styleSheet">
+            <string notr="true">QPushButton#addButton {
+    background-color: #A8E6CF;
+    color: #37474F;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+QPushButton#addButton:hover {
+    background-color: #94D6B9;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Add Record</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="editButton">
+           <property name="styleSheet">
+            <string notr="true">QPushButton#editButton {
+    background-color: #FFD3B6;
+    color: #37474F;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+QPushButton#editButton:hover {
+    background-color: #FFC3A2;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Edit Record</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="deleteButton">
+           <property name="styleSheet">
+            <string notr="true">QPushButton#deleteButton {
+    background-color: #FF8B94;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+QPushButton#deleteButton:hover {
+    background-color: #FF6F7D;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Delete Record</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
