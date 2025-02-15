@@ -1,6 +1,7 @@
 import sys
 import sqlite3
 from PyQt5 import QtCore, QtGui, QtWidgets
+import re
 
 from ui_main import Ui_MainWindow
 
@@ -28,10 +29,7 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def create_table(self):
         try:
-            # self.cursor.execute("DROP TABLE IF EXISTS brand")
-            # self.cursor.execute("DROP TABLE IF EXISTS country")
-            # self.cursor.execute("DROP TABLE IF EXISTS inventory")
-            # inventory table
+            # Creating the necessary tables if they don't already exist
             self.cursor.execute(
                 """CREATE TABLE IF NOT EXISTS inventory (
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,7 +39,6 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
                                     date TEXT,
                                     stock INTEGER)"""
             )
-            # brand table
             self.cursor.execute(
                 """
                 CREATE TABLE IF NOT EXISTS brand (
@@ -51,7 +48,6 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 """
             )
 
-            # country table
             self.cursor.execute(
                 """
                 CREATE TABLE IF NOT EXISTS country (
@@ -69,6 +65,7 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def load_table(self):
         try:
+            # Query to get all inventory records
             self.cursor.execute(
                 "SELECT id, size, brand, country, date, stock FROM inventory"
             )
@@ -95,7 +92,6 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 )  # Add each brand name to the dropdown
             self.brandDropdown.addItem("Add New Brand ...")
             self.brandDropdown.activated.connect(self.add_newBrand)
-
         except sqlite3.Error as e:
             QtWidgets.QMessageBox.critical(
                 self, "Database Error", f"Failed to load brandDropdown data: {e}"
@@ -138,11 +134,16 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
         date = self.dateEdit.text()
         stock = self.stockEdit.text()
 
+        # Use old values if new values are empty
         size = size if size else old_size
         brand = brand if brand else old_brand
         country = country if country else old_country
         date = date if date else old_date
         stock = stock if stock else old_stock
+
+        # Validate inputs
+        if not self.validate_input(size, stock, date):
+            return
 
         try:
             self.cursor.execute(
@@ -154,7 +155,6 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
             QtWidgets.QMessageBox.information(
                 self, "Success", "Record updated successfully."
             )
-
         except sqlite3.Error as e:
             QtWidgets.QMessageBox.critical(
                 self, "Database Error", f"Failed to update record: {e}"
@@ -185,6 +185,11 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
         country = self.countryDropdown.currentText()
         date = self.dateEdit.text()
         stock = self.stockEdit.text()
+
+        # Validate inputs before adding
+        if not self.validate_input(size, stock, date):
+            return
+
         try:
             self.cursor.execute(
                 "INSERT INTO inventory (size, brand, country, date, stock) VALUES (?, ?, ?, ?, ?)",
@@ -234,7 +239,7 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
         if state:
             self.load_filter_elements()
         else:
-            # Clear the filter dropdown without reloading the table
+            # Clear filter dropdown and reload table
             self.filterElementDropdown.clear()
             self.load_table()
         self.filterDropdown.setEnabled(state)
@@ -246,13 +251,10 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
             if self.filterCheckBox.isChecked():
                 if filter_type == "year":
                     query = "SELECT DISTINCT substr(date, 7, 4) AS year FROM inventory"
-
                 else:
                     query = f"SELECT DISTINCT {filter_type} FROM inventory"
                 self.cursor.execute(query)
                 elements = [row[0] for row in self.cursor.fetchall()]
-                print(elements)
-
                 self.filterElementDropdown.clear()
                 self.filterElementDropdown.addItems(elements)
         except sqlite3.Error as e:
@@ -286,59 +288,116 @@ class InventoryApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 self, "Database Error", f"Failed to apply filter: {e}"
             )
 
-    def add_newBrand(self):
-        if self.brandDropdown.currentText() == "Add New Brand ...":
-            new_brand, ok = QtWidgets.QInputDialog.getText(
-                self, "New Brand", "Enter New Brand"
+    def validate_input(self, size, stock, date):
+        # Validate that size is not empty
+        if not size:
+            QtWidgets.QMessageBox.warning(
+                self, "Validation Error", "Size cannot be empty."
             )
-            if ok and new_brand:  # Ensure that the input is not empty
-                try:
-                    self.cursor.execute(
-                        "INSERT INTO brand (name) VALUES (?)",
-                        (new_brand.lower().capitalize(),),
-                    )
-                    self.conn.commit()
-                    self.load_brandDropdown()  # Reload to include the new brand
-                    QtWidgets.QMessageBox.information(
-                        self, "Success", "Brand Added Successfully."
-                    )
-                except sqlite3.IntegrityError:
-                    QtWidgets.QMessageBox.warning(
-                        self, "Error", "This brand already exists."
-                    )
-                except sqlite3.Error as e:
-                    QtWidgets.QMessageBox.critical(
-                        self, "Database Error", f"Failed to add brand: {e}"
-                    )
+            return False
 
-    def add_newCountry(self):
-        if self.countryDropdown.currentText() == "Add New Country ...":
-            new_country, ok = QtWidgets.QInputDialog.getText(
-                self, "New Country", "Enter New Country"
+        # Validate that stock is a valid number
+        if not stock.isdigit():
+            QtWidgets.QMessageBox.warning(
+                self, "Validation Error", "Stock must be a valid number."
             )
-            if ok and new_country:  # Ensure that the input is not empty
-                try:
-                    self.cursor.execute(
-                        "INSERT INTO country (name) VALUES (?)",
-                        (new_country.lower().capitalize(),),
-                    )
-                    self.conn.commit()
-                    self.load_countryDropdown()  # Reload to include the new country
-                    QtWidgets.QMessageBox.information(
-                        self, "Success", "Country Added Successfully."
-                    )
-                except sqlite3.IntegrityError:
-                    QtWidgets.QMessageBox.warning(
-                        self, "Error", "This country already exists."
-                    )
-                except sqlite3.Error as e:
-                    QtWidgets.QMessageBox.critical(
-                        self, "Database Error", f"Failed to add country: {e}"
-                    )
+            return False
+
+        # Validate date format (simple check for DD/MM/YYYY)
+        if not re.match(r"\d{2}/\d{2}/\d{4}", date):
+            QtWidgets.QMessageBox.warning(
+                self, "Validation Error", "Date must be in DD/MM/YYYY format."
+            )
+            return False
+
+        return True
+
+
+def main():
+    app = QtWidgets.QApplication(sys.argv)
+    window = InventoryApp()
+    window.show()
+    sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    mainWin = InventoryApp()
-    mainWin.show()
-    sys.exit(app.exec_())
+    main()
+
+
+def search_records(self):
+    search_text = self.searchEdit.text()
+    query = "SELECT id, size, brand, country, date, stock FROM inventory WHERE size LIKE ? OR brand LIKE ? OR country LIKE ?"
+    params = (f"%{search_text}%", f"%{search_text}%", f"%{search_text}%")
+
+    try:
+        self.cursor.execute(query, params)
+        records = self.cursor.fetchall()
+        self.table.setRowCount(len(records))
+        for row_idx, row_data in enumerate(records):
+            for col_idx, col_data in enumerate(row_data):
+                self.table.setItem(
+                    row_idx, col_idx, QtWidgets.QTableWidgetItem(str(col_data))
+                )
+    except sqlite3.Error as e:
+        QtWidgets.QMessageBox.critical(
+            self, "Database Error", f"Failed to search records: {e}"
+        )
+
+
+def apply_filter(self):
+    filter_value = self.filterElementDropdown.currentText()
+    try:
+        if self.filterCheckBox.isChecked():
+            filter_type = self.filterDropdown.currentText().lower()
+            if filter_type == "year":
+                query = """
+                        SELECT id, size, brand, country, date, stock
+                        FROM inventory
+                        WHERE substr(date, 7, 4) = ?
+                    """
+            else:
+                query = f"SELECT id, size, brand, country, date, stock FROM inventory WHERE {filter_type} = ?"
+            self.cursor.execute(query, (filter_value,))
+            rows = self.cursor.fetchall()
+            self.table.setRowCount(len(rows))
+            for row_idx, row_data in enumerate(rows):
+                for col_idx, col_data in enumerate(row_data):
+                    self.table.setItem(
+                        row_idx, col_idx, QtWidgets.QTableWidgetItem(str(col_data))
+                    )
+    except sqlite3.Error as e:
+        QtWidgets.QMessageBox.critical(
+            self, "Database Error", f"Failed to apply filter: {e}"
+        )
+
+
+def load_brandDropdown(self):
+    try:
+        self.brandDropdown.clear()  # Clear existing items
+        self.cursor.execute("SELECT name FROM brand ORDER BY name ASC")
+        rows = self.cursor.fetchall()
+        for row in rows:
+            self.brandDropdown.addItem(row[0])  # Add each brand name to the dropdown
+        self.brandDropdown.addItem("Add New Brand ...")
+        self.brandDropdown.activated.connect(self.add_newBrand)
+    except sqlite3.Error as e:
+        QtWidgets.QMessageBox.critical(
+            self, "Database Error", f"Failed to load brandDropdown data: {e}"
+        )
+
+
+def load_countryDropdown(self):
+    try:
+        self.countryDropdown.clear()  # Clear existing items
+        self.cursor.execute("SELECT name FROM country ORDER BY name ASC")
+        rows = self.cursor.fetchall()
+        for row in rows:
+            self.countryDropdown.addItem(
+                row[0]
+            )  # Add each country name to the dropdown
+        self.countryDropdown.addItem("Add New Country ...")
+        self.countryDropdown.activated.connect(self.add_newCountry)
+    except sqlite3.Error as e:
+        QtWidgets.QMessageBox.critical(
+            self, "Database Error", f"Failed to load countryDropdown data: {e}"
+        )
