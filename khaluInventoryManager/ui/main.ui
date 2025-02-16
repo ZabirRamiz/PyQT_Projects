@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1281</width>
+    <height>575</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* List Item */
+QListWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #D3D3D3;
+    border-radius: 3px;
+    color: #333333;
+}
+
+QListWidget::item {
+    background-color: #F4F4F9;
+    padding: 5px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+QListWidget::item:hover {
+    background-color: #E0E0E0;
+}
+
+QListWidget::item:selected {
+    background-color: #A8DADC;
+    color: #ffffff;
+}
+/* Buttons */
+QPushButton#searchButton {
+    background-color: #A8DADC;
+    border: 1px solid #81C3C8;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+QPushButton#searchButton:hover {
+    background-color: #81C3C8;
+}
+
+/* Add Button */
+QPushButton#addItemButton {
+    background-color: #BDE7BD;
+    border: 1px solid #A3D9A3;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+QPushButton#addItemButton:hover {
+    background-color: #A3D9A3;
+}
+QPushButton#addRecordButton {
+    background-color: #BDE7BD;
+    border: 1px solid #A3D9A3;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+QPushButton#addRecordButton:hover {
+    background-color: #A3D9A3;
+}
+
+/* Edit Button */
+QPushButton#editItemButton {
+    background-color: #FAD6A5;
+    border: 1px solid #F9C784;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+QPushButton#editItemButton:hover {
+    background-color: #F9C784;
+}
+QPushButton#editRecordButton {
+    background-color: #FAD6A5;
+    border: 1px solid #F9C784;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+QPushButton#editRecordButton:hover {
+    background-color: #F9C784;
+}
+/* Delete Button */
+QPushButton#deleteItemButton {
+    background-color: #FFADAD;
+    border: 1px solid #FF8585;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+QPushButton#deleteItemButton:hover {
+    background-color: #FF8585;
+}
+QPushButton#deleteRecordButton {
+    background-color: #FFADAD;
+    border: 1px solid #FF8585;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+QPushButton#deleteRecordButton:hover {
+    background-color: #FF8585;
+}
+/* Input Box */
+QLineEdit {
+    background-color: #F1F1F1;
+    border: 1px solid #D3D3D3;
+    border-radius: 3px;
+    padding: 5px;
+    color: #333333;
+}
+
+/* Table */
+QTableWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    gridline-color: #E0E0E0;
+    color: #333333;
+}
+QHeaderView::section {
+    background-color: #C9CCD5;
+    color: #333333;
+    padding: 5px;
+    border: 1px solid #E0E0E0;
+}
+QTableWidget::item {
+    background-color: #F4F4F9;
+}
+QTableWidget::item:alternate {
+    background-color: #FFFFFF;
+}
+
+/* Main Background */
+QWidget#centralwidget {
+    background-color: #FFFFFF;
+}
+QWidget#col1 {
+    background-color: #EDEEF7;
+}
+QWidget#col3 {
+    background-color: #EDEEF7;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget_7">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>1231</width>
+      <height>486</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="masterLayout">
+     <item>
+      <layout class="QVBoxLayout" name="col1">
+       <item>
+        <widget class="QListWidget" name="itemList">
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <item>
+          <property name="text">
+           <string>New Item</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>New Item</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>New Item</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>New Item</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addItemButton">
+         <property name="text">
+          <string>Add Item</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editItemButton">
+         <property name="text">
+          <string>Edit Item</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="deleteItemButton">
+         <property name="text">
+          <string>Delete Item</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="col2">
+       <item>
+        <layout class="QHBoxLayout" name="col2_row1">
+         <item>
+          <widget class="QLineEdit" name="searchInput"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="searchButton">
+           <property name="text">
+            <string>Search</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="inventoryTable">
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <attribute name="horizontalHeaderCascadingSectionResizes">
+          <bool>false</bool>
+         </attribute>
+         <row>
+          <property name="text">
+           <string>New Row</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>New Row</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>New Row</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>New Row</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>New Row</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>New Row</string>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>New Column</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>New Column</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>New Column</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>New Column</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>New Column</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="col3">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>45</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="col3_row1">
+           <item>
+            <widget class="QLabel" name="partNumberLabel">
+             <property name="text">
+              <string>Part Number:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="partNumberInput"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="col3_row2">
+           <item>
+            <widget class="QLabel" name="purchasePriceLabel">
+             <property name="text">
+              <string>Purchase Price:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="purchasePriceInput"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="col2_row3">
+           <item>
+            <widget class="QLabel" name="sellingPriceLabel">
+             <property name="text">
+              <string>Selling Price:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="sellingPriceInput"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="col3_row4">
+           <item>
+            <widget class="QLabel" name="quraterLabel">
+             <property name="text">
+              <string>Quarter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="quarterInput">
+             <property name="inputMask">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="col3_row5">
+           <item>
+            <widget class="QLabel" name="stockLabel">
+             <property name="text">
+              <string>Stock:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="stockInput"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addRecordButton">
+         <property name="text">
+          <string>Add Record</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editRecordButton">
+         <property name="text">
+          <string>Edit Record</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="deleteRecordButton">
+         <property name="text">
+          <string>Delete Record</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1281</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
