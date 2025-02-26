@@ -40,6 +40,47 @@ QListWidget::item:selected {
     background-color: #A8DADC;
     color: #ffffff;
 }
+/* ComboBox */
+QComboBox {
+    background-color: #F1F1F1;
+    border: 1px solid #D3D3D3;
+    border-radius: 3px;
+    padding: 5px;
+    color: #333333;
+    min-width: 150px;
+}
+
+QComboBox::drop-down {
+    border: none;
+}
+
+
+
+/* ComboBox Popup */
+QComboBox QAbstractItemView {
+    background-color: #FFFFFF;
+    border: 1px solid #D3D3D3;
+    color: #333333;
+    selection-background-color: #A8DADC; /* Change selection color */
+    selection-color: #FFFFFF; /* Text color when selected */
+    padding: 5px;
+}
+
+QComboBox::item {
+    padding: 5px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+QComboBox::item:selected {
+    background-color: #81C3C8;
+    color: #FFFFFF;
+}
+
+
+
+
+
+
 /* Buttons */
 QPushButton#searchButton {
     background-color: #A8DADC;
@@ -370,10 +411,22 @@ QWidget#col3 {
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="quarterInput">
-             <property name="inputMask">
-              <string/>
-             </property>
+            <widget class="QComboBox" name="comboBox">
+             <item>
+              <property name="text">
+               <string>New Item</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>New Item</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>New Item</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
@@ -426,7 +479,7 @@ QWidget#col3 {
      <x>0</x>
      <y>0</y>
      <width>1281</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
